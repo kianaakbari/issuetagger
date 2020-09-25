@@ -9,12 +9,14 @@ import re
 import sys
 import numpy as np
 
+last_issue_numbers = ["spring-boot": 18689, "spring-framework": 23840, "elasticsearch": 48295]
+
 # owner = "elastic"
 # repo = "elasticsearch"
 owner = "spring-projects"
-repo = "spring-framework"
-df = pd.read_csv("numbers/" + repo + "_numbers.csv")
-df_size = df.shape[0]
+repo = "spring-boot"
+
+df_size = last_issue_numbers[repo]
 chunk_size = 5000
 #chunk size = rate_limit*clients_number/requests_per_issue
 #rate_limit = 5000
@@ -22,7 +24,7 @@ chunk_size = 5000
 #requests_per_issue =~ 5 #chon axare issue ha bishtar az 100 ta cm ya event nadaran, baraye taghirban hamashun bishtar az 5 ta req dade nmishe
 
 chunks_number = df_size//chunk_size if df_size//chunk_size == df_size/chunk_size else df_size//chunk_size+1
-numbers = list(df.number)
+numbers = list(range(1,df_size+1))
 
 delay_conn = 10
 clients = [('your_clinet_id_1', 'your_clinet_secret_1'),
