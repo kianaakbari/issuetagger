@@ -145,24 +145,24 @@ def get_issues(repo_address):
 
             issue_req = "https://api.github.com/repos/" + repo_address + "/issues/" + str(number) + "?client_id=" + client_id + "&client_secret=" + client_secret  
             issue_obj = get_data(issue_req)
-
-            closer_obj = np.nan
-            if issue_obj["closed_by"]:
-                closer = issue_obj["closed_by"]["login"]
-                user_req = "https://api.github.com/users/" + closer + '?client_id=' + client_id + '&client_secret=' + client_secret
-                closer_obj = get_data(user_req)        
-
-            author_obj = np.nan
+            
             if issue_obj:
+                closer_obj = np.nan
+                if issue_obj["closed_by"]:
+                    closer = issue_obj["closed_by"]["login"]
+                    user_req = "https://api.github.com/users/" + closer + '?client_id=' + client_id + '&client_secret=' + client_secret
+                    closer_obj = get_data(user_req)        
+
+
                 author = issue_obj["user"]["login"]
                 user_req = "https://api.github.com/users/" + author + '?client_id=' + client_id + '&client_secret=' + client_secret
                 author_obj = get_data(user_req)
 
-            events_req = "https://api.github.com/repos/" +  repo_address + "/issues/" + str(number) + "/events?per_page=100" + '&client_id=' + client_id + '&client_secret=' + client_secret
-            events_obj = get_data_pages(events_req)
+                events_req = "https://api.github.com/repos/" +  repo_address + "/issues/" + str(number) + "/events?per_page=100" + '&client_id=' + client_id + '&client_secret=' + client_secret
+                events_obj = get_data_pages(events_req)
 
-            comments_req = "https://api.github.com/repos/" + repo_address + "/issues/" + str(number) + "/comments?per_page=100" + '&client_id=' + client_id + '&client_secret=' + client_secret
-            comments_obj = get_data_pages(comments_req)
+                comments_req = "https://api.github.com/repos/" + repo_address + "/issues/" + str(number) + "/comments?per_page=100" + '&client_id=' + client_id + '&client_secret=' + client_secret
+                comments_obj = get_data_pages(comments_req)
 
             client_index += 1
             if(client_index == clients_number):
