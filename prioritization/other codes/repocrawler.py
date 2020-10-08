@@ -9,8 +9,7 @@ import re
 import sys
 import numpy as np
 
-# last_issue_numbers = {"spring-projects/spring-boot": 18689, "spring-projects/spring-framework": 23840, "elastic/elasticsearch": 48295}
-last_issue_numbers = {"ReactiveX/RxJava": 7092, "square/okhttp": 6308, "square/retrofit": 3475, "google/guava":5263}
+last_issue_numbers = {"spring-projects/spring-boot": 18689, "spring-projects/spring-framework": 23840, "elastic/elasticsearch": 48295, "ReactiveX/RxJava": 7092, "square/okhttp": 6308, "square/retrofit": 3475, "google/guava":5263}
 repos = last_issue_numbers.keys()
 
 delay_conn = 10
@@ -169,7 +168,7 @@ def get_issues(repo_address):
                 client_index = 0 
 
             if(issue_obj == False or closer_obj == False or author_obj == False or events_obj == False or comments_obj==False):
-                print("\n-------some problem with this issue!-------")
+                print(f"\n-------some problem with issue {number}!-------")
             else:
                 issues.append({"number":number, "issue_obj":json.dumps(issue_obj), "author_obj":json.dumps(author_obj), "closer_obj":json.dumps(closer_obj), "events_obj":json.dumps(events_obj), "comments_obj":json.dumps(comments_obj)})
         issues_df = pd.DataFrame(issues)
@@ -183,7 +182,7 @@ def get_issues(repo_address):
             
      
 for repo_address in repos:
-    print("---------repo_address---------")
+    print(f"---------{repo_address}---------")
     print("Starting time:" + str(datetime.now()))
     get_issues(repo_address)
     print("End time:" + str(datetime.now()))
