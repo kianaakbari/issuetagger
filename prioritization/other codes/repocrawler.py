@@ -21,7 +21,6 @@ clients = [('your_clinet_id_1', 'your_clinet_secret_1'),
            ('your_clinet_id_5', 'your_clinet_secret_5')]
 
 clients_number = len(clients)          
-client_index = 0
 headers = {}
 headers['Accept'] = 'application/vnd.github.starfox-preview+json'
 
@@ -131,20 +130,18 @@ def get_data_pages(req_url):
     return resp_list
 
 def get_issues(repo_address):
+    client_index = 0
     repo_name = repo_address.split('/')[1]
-    df_size = last_issue_numbers[repo_name]
+    df_size = last_issue_numbers[repo_address]
     chunks_number = df_size//chunk_size if df_size//chunk_size == df_size/chunk_size else df_size//chunk_size+1
     numbers = list(range(1,df_size+1))
     
-    counter = 0 
     for i in range(chunks_number):
         print("****chunk number: " + str(i) + "****")
         batch_start_time = datetime.now()
         issues = []
         for number in numbers[i*chunk_size:(i+1)*chunk_size]:
-            counter += 1
             client_id, client_secret = clients[client_index]
-            print(str(counter) + " - " + str(number))
 
             issue_req = "https://api.github.com/repos/" + repo_address + "/issues/" + str(number) + "?client_id=" + client_id + "&client_secret=" + client_secret  
             issue_obj = get_data(issue_req)
@@ -184,8 +181,9 @@ def get_issues(repo_address):
             print("----sleep time: " + str(duration) + "----")
             time.sleep(3600 - duration)
             
+     
 for repo_address in repos:
-    print(repo_adress)
+    print("---------repo_address---------")
     print("Starting time:" + str(datetime.now()))
     get_issues(repo_address)
     print("End time:" + str(datetime.now()))
