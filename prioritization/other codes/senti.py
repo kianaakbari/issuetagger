@@ -12,7 +12,6 @@ senti.setSentiStrengthLanguageFolderPath('/home/ubuntu/Kiana/data/SentiStrength_
 
 def sentistrength(txt):
     sentiments = senti.getSentiment(txt, score='binary')[0]
-    print(sentiments)
     return str(sentiments[0])+","+str(sentiments[1])
 
 print("*****senti started title*****")
