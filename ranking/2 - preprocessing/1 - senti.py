@@ -2,7 +2,7 @@ from sentistrength import PySentiStr
 import pandas as pd
 from textblob import TextBlob
 
-df = pd.read_csv("data/allrepos_processed_textonly.csv")
+df = pd.read_csv("prioritization/data/allrepos_processed_textonly.csv")
 df['title_processed'] = df['title_processed'].astype(str)
 df['body_processed'] = df['body_processed'].astype(str)
 
@@ -12,6 +12,7 @@ senti.setSentiStrengthLanguageFolderPath('/home/ubuntu/Kiana/data/SentiStrength_
 
 def sentistrength(txt):
     sentiments = senti.getSentiment(txt, score='binary')[0]
+    print(sentiments)
     return str(sentiments[0])+","+str(sentiments[1])
 
 print("*****senti started title*****")
@@ -30,5 +31,5 @@ print("*****blob started body*****")
 df["body_textblob"] = df['body_processed'].apply(textblob)
 
 sentiment_columns = ["title_sentistrenght", "body_sentistrenght", "title_textblob", "body_textblob"]
-df[sentiment_columns].to_csv("data/allrepos_sentiments.csv", index=False)
+df[sentiment_columns].to_csv("prioritization/data/allrepos_sentiments.csv", index=False)
 
